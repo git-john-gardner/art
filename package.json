@@ -1,0 +1,22 @@
+{
+  "name": "art",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/git-john-gardner/art.git"
+  },
+  "author": "John Gardner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/git-john-gardner/art/issues"
+  },
+  "homepage": "https://github.com/git-john-gardner/art#readme",
+  "devDependencies": {
+    "rollup": "^2.56.3"
+  }
+}
