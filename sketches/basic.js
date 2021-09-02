@@ -1,5 +1,5 @@
 import { randchoice, random } from "../src/maths";
-import { pausablesketch } from "../src/p5js/sketches"
+import { pausablesketch } from "../src/p5js/templates"
 import { pallettes } from "../src/colours";
 
 let colours = pallettes.coffee
