@@ -10,7 +10,12 @@
 <body>
     <script>
         let sketch = new URLSearchParams(window.location.search).get("sketch");
-        import(`./js/bundle.${sketch}.js`).catch(e => import(`./js/bundle.basic.js`))
+        import(`./js/bundle.${sketch}.js`)
+            .catch(e => {
+                console.log(e);
+                console.log("Error loading sketch: ^. Defaulting to basic.")
+                import(`./js/bundle.basic.js`)
+            })
     </script>
 </body>
 
