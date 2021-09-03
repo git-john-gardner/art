@@ -23,21 +23,22 @@ const pausablesketch = (setup, draw) => {
     })
 }
 
-const staticgrid = (generatef, setup = donothing) => {
+const staticgrid = (f, reset = donothing) => {
     return new p5((p5) => {
-        const f = generatef(p5)
-
         let seed = 0;
         let paused = false;
 
-        p5.setup = function () {
+        const _reset = () => {
             seed++
-            paused = false;
             console.log(`Seed: ${seed}`)
-            p5.noiseSeed(seed); p5.randomSeed(seed);
+            reset({ seed })
+        }
+
+        p5.setup = function () {
+            paused = false;
             p5.createCanvas(p5.windowWidth, p5.windowHeight);
             p5.pixelDensity(1)
-            setup(p5)
+            _reset()
         }
 
         p5.draw = function () {
@@ -59,13 +60,13 @@ const staticgrid = (generatef, setup = donothing) => {
         }
 
         p5.keyPressed = function () {
-            if (p5.key == "s")
-                p5.saveCanvas("sketch.png")
-            if (p5.key == " ")
-                p5.setup()
+            if (p5.key == "s") p5.saveCanvas("sketch.png")
+            if (p5.key == " ") p5.setup()
         }
     })
-
 }
+
+// TODO some sort of composing?
+// composesketch(pausable, fullscreen)
 
 export { pausablesketch, staticgrid }

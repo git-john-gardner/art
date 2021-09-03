@@ -28,6 +28,10 @@ function smoothstep(x) {
     return 3 * x ** 2 - 2 * x ** 3
 }
 
+function ismoothstep(x) {
+    return 2 * x ** 3 - 3 * x ** 2 + 2 * x
+}
+
 function parts(num) {
     const int = Math.floor(num)
     return [int, num - int]
@@ -62,15 +66,15 @@ function repeatablyrandom(initseed) {
 
 const scaledcosine = i => 0.5 * (1.0 - Math.cos(i * Math.PI));
 
-// TOOD can this be sped up?
+// TODO can this be sped up?
 // TODO 4+ dimensional?
-function perlinnoise(seed) {
+function perlinnoise(seed = 0) {
     // adapted from p5.js: 
     // see https://github.com/processing/p5.js/blob/374acfb44588bfd565c54d61264df197d798d121/src/math/noise.js
 
     const gen = repeatablyrandom(seed)
 
-    const size = 1 << 12 - 1
+    const size = (1 << 12) - 1
     let perlin = nthings(size + 1, gen.rand)
 
     const PERLIN_YWRAPB = 4;
@@ -145,6 +149,7 @@ function perlinnoise(seed) {
                 zf--;
             }
         }
+        if (isNaN(r)) console.log(x, y)
         return r / totala;
     }
 
@@ -152,7 +157,7 @@ function perlinnoise(seed) {
         noise,
         seed(val) {
             gen.seed(val)
-            perlin = nthings(size, gen.rand)
+            perlin = nthings(size + 1, gen.rand)
         },
         detail(o = 4, f = 0.5) {
             octaves = o;
@@ -163,4 +168,4 @@ function perlinnoise(seed) {
 
 
 
-export { random, randint, randchoice, repeatablyrandom, perlinnoise, ssin, smoothstep }
+export { random, randint, randchoice, repeatablyrandom, perlinnoise, ssin, smoothstep, ismoothstep }
