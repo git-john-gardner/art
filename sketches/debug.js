@@ -1,7 +1,9 @@
-import { nthings } from "../src/fns";
-import { perlinnoise } from "../src/maths";
+import { random } from "../src/maths"
+import { composesketch, fullscreen, pausable, saveable } from "../src/p5js/templates"
 
-const p = perlinnoise()
-debugger
-console.log(p.noise(9.81, 29.25))
-console.log(nthings(5, Math.random))
+function draw(p5) {
+    const [x, y] = [random(p5.width), random(p5.height)]
+    p5.rect(x, y, 50)
+}
+
+composesketch(pausable, fullscreen, saveable, { draw })

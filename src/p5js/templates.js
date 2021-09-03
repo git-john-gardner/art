@@ -1,28 +1,6 @@
 import { pixelgrid, setPixel } from "./util";
 import { donothing } from "../fns";
 
-const pausablesketch = (setup, draw) => {
-    return new p5((p5) => {
-        let paused = false;
-
-        p5.setup = function () { setup(p5) }
-
-        p5.draw = function () {
-            if (paused)
-                p5.frameCount--
-            else
-                draw(p5)
-        }
-
-        p5.keyPressed = function () {
-            if (p5.key == " ")
-                paused = !paused
-            if (p5.key == "s")
-                p5.saveCanvas("sketch.png")
-        }
-    })
-}
-
 const staticgrid = (f, reset = donothing) => {
     return new p5((p5) => {
         let seed = 0;
@@ -66,7 +44,48 @@ const staticgrid = (f, reset = donothing) => {
     })
 }
 
-// TODO some sort of composing?
-// composesketch(pausable, fullscreen)
 
-export { pausablesketch, staticgrid }
+const pausable = (() => {
+    let paused = false
+    return {
+        setup: () => { paused = false },
+        draw: (p5) => {
+            if (paused) {
+                p5.frameCount--
+                return true
+            }
+        },
+        keyPressed: (p5) => { if (p5.key == " ") paused = !paused }
+    }
+})()
+
+const fullscreen = {
+    setup: (p5) => {
+        p5.createCanvas(p5.windowWidth, p5.windowHeight)
+    }
+}
+
+
+const saveable = {
+    keyPressed: p5 => { if (p5.key == "s") p5.saveCanvas("sketch.png") }
+}
+
+
+function composesketch(...props) {
+    const allp5fns = new Set()
+    props.forEach(p => Object.keys(p).forEach(o => allp5fns.add(o)))
+
+    return new p5((p5) => {
+        allp5fns.forEach(fn => {
+            p5[fn] = function () {
+                for (const p of props) {
+                    const _break = p[fn] == undefined ? false : p[fn](p5)
+                    if (_break == true) break;
+                }
+            }
+        })
+    })
+}
+
+
+export { staticgrid, composesketch, pausable, fullscreen, saveable }
