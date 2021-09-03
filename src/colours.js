@@ -9,6 +9,10 @@ const _pallettes = {
     lavender: "#CCF0C3 #BCA3CA #7C4789 #4A0E5C",
     sailor: "#FA163F #12CAD6 #0FABBC #E4F9FF",
     phouse: "#F1F1F1 #FDB827 #21209C #23120B",
+    ranger: "#cb997e #ddbea9 #ffe8d6 #b7b7a4 #a5a58d #6b705c",
+    nyan: "#9ba2ff #a499be #9e8576 #7a542e #2a2e45 #1d1e2c",
+    seasalt: "#818479 #b5cbb7 #d2e4c4 #e4e9b2 #e7e08b #235789",
+    child: "#264653 #2a9d8f #e9c46a #f4a261 #e76f51",
     default: "#000000 #888888 #FFFFFF",
 }
 

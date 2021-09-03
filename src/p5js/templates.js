@@ -65,27 +65,54 @@ const fullscreen = {
     }
 }
 
-
-const saveable = {
-    keyPressed: p5 => { if (p5.key == "s") p5.saveCanvas("sketch.png") }
+const onkey = (key, callback) => {
+    return {
+        keyPressed: (p5) => {
+            if (p5.key == key) callback(p5)
+        }
+    }
 }
+const saveable = onkey("s", p5 => p5.saveCanvas("sketch.png"))
 
-
-function composesketch(...props) {
-    const allp5fns = new Set()
-    props.forEach(p => Object.keys(p).forEach(o => allp5fns.add(o)))
-
-    return new p5((p5) => {
-        allp5fns.forEach(fn => {
-            p5[fn] = function () {
-                for (const p of props) {
-                    const _break = p[fn] == undefined ? false : p[fn](p5)
-                    if (_break == true) break;
+const mapfunction = (fn) => {
+    return (() => {
+        return {
+            setup: (p5) => { p5.pixelDensity(1) },
+            draw: (p5) => {
+                p5.loadPixels()
+                const tick = performance.now()
+                for (const [idx, x, y] of pixelgrid(p5)) {
+                    const val = fn({ x, y })
+                    setPixel(p5, idx, val)
                 }
+                const tock = performance.now()
+                p5.updatePixels()
+
+                const duration = tock - tick
+                const calculations = p5.width * p5.height * p5.pixelDensity() ** 2
+                console.log("Pixels per ms:", (calculations / duration).toFixed(0));
             }
-        })
-    })
+        }
+    })()
 }
 
+const staticseeded = (cb) => {
+    return (() => {
+        let seed = 0;
+        const reset = (p5) => {
+            cb(++seed)
+            p5.frameCount--
+        }
+        return {
+            draw: (p5) => {
+                if (p5.frameCount > 1) {
+                    p5.frameCount--
+                    return true
+                }
+            },
+            ...onkey(" ", reset)
+        }
+    })()
+}
 
-export { staticgrid, composesketch, pausable, fullscreen, saveable }
+export { staticgrid, pausable, fullscreen, saveable, mapfunction, onkey, staticseeded }

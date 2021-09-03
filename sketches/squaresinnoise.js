@@ -1,4 +1,5 @@
-import { staticgrid } from "../src/p5js/templates";
+import { fullscreen, mapfunction, saveable, staticseeded } from "../src/p5js/templates";
+import { sketch } from "../src/p5js/composition";
 import { pallettes } from "../src/colours";
 import { perlinnoise, smoothstep, ssin } from "../src/maths";
 import { pipe } from "../src/fns";
@@ -29,14 +30,17 @@ function squaressin({ x, y }) {
     return (ssin(x * sscale) + ssin(y * sscale)) / 2
 }
 
-staticgrid(
-    pipe(
-        distortion(dscale, damplt),
-        squaressin,
-        (n) => perlin.noise(n * rapidity),
-        smoothstep,
-        // ismoothstep,
-        color
-    ),
-    ({ seed }) => perlin.seed(seed)
+const f = pipe(
+    distortion(dscale, damplt),
+    squaressin,
+    (n) => perlin.noise(n * rapidity),
+    smoothstep,
+    color
+)
+
+sketch.compose(
+    fullscreen, saveable,
+    staticseeded(perlin.seed),
+    mapfunction(f)
+
 )

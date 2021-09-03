@@ -17,4 +17,10 @@ function collect(iter) {
     return arr
 }
 
-export { enumerate, range, collect }
+function allkeys(...objects) {
+    const keys = new Set()
+    objects.forEach(o => Object.keys(o).forEach(k => keys.add(k)))
+    return keys
+}
+
+export { enumerate, range, collect, allkeys }
