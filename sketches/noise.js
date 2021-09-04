@@ -1,7 +1,9 @@
 import { staticgrid } from "../src/p5js/templates";
 import { grayscale } from "../src/colours";
-import { perlinnoise, smoothstep, ssin } from "../src/maths";
+import { ssin } from "../src/maths";
+import { perlinnoise } from "../src/maths";
 import { pipe } from "../src/fns";
+import { smoothstep } from "../src/maths/mappings";
 
 // settings
 const sscale = 0.04;

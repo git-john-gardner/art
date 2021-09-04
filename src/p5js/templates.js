@@ -59,6 +59,7 @@ const pausable = (() => {
     }
 })()
 
+
 const fullscreen = {
     setup: (p5) => {
         p5.createCanvas(p5.windowWidth, p5.windowHeight)
@@ -73,6 +74,7 @@ const onkey = (key, callback) => {
     }
 }
 const saveable = onkey("s", p5 => p5.saveCanvas("sketch.png"))
+const resettable = onkey("r", p5 => p5.setup())
 
 const mapfunction = (fn) => {
     return (() => {
@@ -96,6 +98,35 @@ const mapfunction = (fn) => {
     })()
 }
 
+const seeded = (cb) => (() => {
+    let seed = 0
+    cb(seed)
+
+    const reset = (p5, ds) => {
+        seed += ds
+        cb(seed)
+        p5.setup()
+        p5.frameCount = 0
+        console.log(`Seed ${seed}`)
+    }
+
+    return {
+        keyPressed: (p5) => {
+            if (p5.key == "r") {
+                reset(p5, 0)
+            } else if (p5.key == "ArrowRight") {
+                reset(p5, +1)
+            } else if (p5.key == "ArrowLeft") {
+                reset(p5, -1)
+            }
+        }
+    }
+})()
+
+const frozen = {
+    draw(p5) { if (p5.frameCount > 1) return true },
+}
+
 const staticseeded = (cb) => {
     return (() => {
         let seed = 0;
@@ -115,4 +146,6 @@ const staticseeded = (cb) => {
     })()
 }
 
-export { staticgrid, pausable, fullscreen, saveable, mapfunction, onkey, staticseeded }
+const normal = [fullscreen, pausable, saveable]
+
+export { staticgrid, pausable, fullscreen, saveable, mapfunction, onkey, staticseeded, resettable, seeded, normal, frozen }

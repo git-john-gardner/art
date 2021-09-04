@@ -1,7 +1,8 @@
-import { fullscreen, mapfunction, onkey, pausable, saveable, staticgrid, staticseeded } from "../src/p5js/templates";
+import { frozen, fullscreen, mapfunction, onkey, pausable, saveable, seeded, staticgrid, staticseeded } from "../src/p5js/templates";
 import { sketch } from "../src/p5js/composition";
 import { grayscale, pallettes } from "../src/colours";
-import { perlinnoise, smoothstep, ssin } from "../src/maths";
+import { ssin } from "../src/maths";
+import { perlinnoise } from "../src/maths";
 import { pipe } from "../src/fns";
 
 // settings
@@ -41,13 +42,11 @@ const f = pipe(
     ({ r, theta }) => perlin.noise(r, r * theta),
     (n) => perlin.noise(n * rapidity),
     // ssin,
-    smoothstep,
     color
 )
 
 sketch.compose(
-    fullscreen,
-    saveable,
-    staticseeded(perlin.seed),
+    fullscreen, saveable,
+    frozen, seeded(perlin.seed),
     mapfunction(f)
 )

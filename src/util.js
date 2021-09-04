@@ -23,4 +23,28 @@ function allkeys(...objects) {
     return keys
 }
 
-export { enumerate, range, collect, allkeys }
+const assertordered = (...args) => {
+    const err = () => { throw `${args} not ordered!` }
+    const reducer = (a, b) => {
+        if (a > b) err()
+        return b
+    }
+    args.reduce(reducer)
+}
+
+function* pairs(arr) {
+    const N = arr.length
+    for (let i = 0; i < N - 1; i++) {
+        yield arr.slice(i, i + 2)
+    }
+}
+
+const time = (fn, msg = "duration:") => {
+    const tick = performance.now()
+    const ret = fn()
+    const tock = performance.now()
+    console.log(msg, `${(tock - tick).toFixed(1)}ms`, fn.name)
+    return ret;
+}
+
+export { enumerate, range, collect, allkeys, pairs, assertordered, time }

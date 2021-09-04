@@ -1,8 +1,10 @@
 import { fullscreen, mapfunction, saveable, staticseeded } from "../src/p5js/templates";
 import { sketch } from "../src/p5js/composition";
 import { pallettes } from "../src/colours";
-import { perlinnoise, smoothstep, ssin } from "../src/maths";
+import { perlinnoise, ssin } from "../src/maths";
+
 import { pipe } from "../src/fns";
+import { smoothstep } from "../src/maths/mappings";
 
 // settings
 const sscale = 0.04;
