@@ -1,4 +1,4 @@
-import { fullscreen, mapfunction, saveable, staticseeded } from "../src/p5js/templates";
+import { frozen, fullscreen, mapfunction, saveable, seeded, staticseeded } from "../src/p5js/templates";
 import { sketch } from "../src/p5js/composition";
 import { pallettes } from "../src/colours";
 import { perlinnoise, ssin } from "../src/maths";
@@ -7,10 +7,10 @@ import { pipe } from "../src/fns";
 import { smoothstep } from "../src/maths/mappings";
 
 // settings
-const sscale = 0.04;
+const sscale = 0.015;
 const dscale = 0.02;
 const damplt = 70;
-const rapidity = 40;
+const rapidity = 12;
 
 // colour
 let colours = pallettes.sea
@@ -37,12 +37,13 @@ const f = pipe(
     squaressin,
     (n) => perlin.noise(n * rapidity),
     smoothstep,
+    smoothstep,
     color
 )
 
 sketch.compose(
     fullscreen, saveable,
-    staticseeded(perlin.seed),
+    frozen, seeded(perlin.seed),
     mapfunction(f)
 
 )

@@ -44,6 +44,10 @@ class Vector {
         return this
     }
 
+    rotatedby(theta) {
+        return this.copy().rot(theta)
+    }
+
     get perp() {
         return this.copy().rot(Math.PI / 2)
     }

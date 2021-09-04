@@ -1,9 +1,9 @@
 import { randchoice, random } from "../src/maths";
-import { fullscreen, pausable, saveable } from "../src/p5js/templates"
+import { normal } from "../src/p5js/templates"
 import { pallettes } from "../src/colours";
 import { sketch } from "../src/p5js/composition";
 
-let colours = pallettes.lavender
+let colours = pallettes.sea
 
 function setup(p5) {
     p5.rectMode(p5.CENTER)
@@ -17,4 +17,4 @@ function draw(p5) {
     p5.rect(0, 0, random(50, 100))
 }
 
-sketch.compose(fullscreen, pausable, saveable, { setup, draw })
+sketch.compose(...normal, { setup, draw })
