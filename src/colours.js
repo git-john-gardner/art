@@ -1,5 +1,5 @@
 import { randchoice } from "./maths"
-import { collect, range } from "./util"
+import { range } from "./util"
 
 const _pallettes = {
     sea: "#E7E0C9 #C1CFC0 #6B7AA1 #11324D",
@@ -26,6 +26,6 @@ for (const [name, colors] of Object.entries(_pallettes))
 
 const randpallette = () => pallettes[randchoice(Object.keys(pallettes))]
 
-const grayscale = (n) => collect(range(n)).map(i => i / (n - 1) * 255)
+const grayscale = (n) => range(n).map(i => i / (n - 1) * 255)
 
 export { pallettes, randpallette, grayscale }

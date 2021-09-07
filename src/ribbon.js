@@ -1,4 +1,4 @@
-import { assertordered, collect, pairs } from "./util";
+import { assertordered, pairs } from "./util";
 import { map, smoothstep } from "./maths/mappings";
 
 const crop = (points, lo, hi) => {

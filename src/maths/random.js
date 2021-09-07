@@ -1,7 +1,34 @@
 import { dontimes } from "../fns";
 
+export function repeatablyrandom(initseed = 0) {
+    // Linear Congruential Generator
+    // see https://en.wikipedia.org/wiki/Linear_congruential_generator
+    let z;
+    const [m, a, c] = [4294967296, 1664525, 1013904223];
+    const gen = {
+        seed(s) {
+            z = s >>> 0
+            // NB seeding doesn't need to be fast. Also,
+            // similar seeds lead to similar sequences.
+            // These two steps effectively remove 
+            // correlation between neighbouring seeds.
+            dontimes(100, this.rand)
+            z = (this.rand() * m) >>> 0
+        },
+        rand() {
+            z = (a * z + c) % m;
+            return z / m;
+        },
+    }
+
+    gen.seed(initseed)
+    return gen
+}
+
+const _rr = repeatablyrandom(Math.random() * 1000)
+
 export function random(x, y) {
-    const r = Math.random();
+    const r = _rr.rand();
 
     if (x === undefined)
         return r;
@@ -20,23 +47,6 @@ export function randchoice(arr) {
     return arr[idx]
 }
 
-export function repeatablyrandom(initseed = 0) {
-    // Linear Congruential Generator
-    // see https://en.wikipedia.org/wiki/Linear_congruential_generator
-    let z;
-    const [m, a, c] = [4294967296, 1664525, 1013904223];
-    const gen = {
-        seed(s) {
-            z = s >>> 0
-            // first few numbers are similar for similar seeds
-            dontimes(10, gen.rand)
-        },
-        rand() {
-            z = (a * z + c) % m;
-            return z / m;
-        }
-    }
-
-    gen.seed(initseed)
-    return gen
+export function seed(s) {
+    _rr.seed(s)
 }

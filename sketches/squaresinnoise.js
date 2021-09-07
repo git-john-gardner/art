@@ -45,5 +45,4 @@ sketch.compose(
     fullscreen, saveable,
     frozen, seeded(perlin.seed),
     mapfunction(f)
-
 )

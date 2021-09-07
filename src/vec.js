@@ -48,6 +48,10 @@ class Vector {
         return this.copy().rot(theta)
     }
 
+    static fromAngle(theta) {
+        return new Vector(1, 0).rotatedby(theta)
+    }
+
     get perp() {
         return this.copy().rot(Math.PI / 2)
     }
@@ -55,6 +59,10 @@ class Vector {
     static random2D(randfn) {
         const theta = (randfn == undefined ? random() : randfn()) * Math.PI * 2
         return new Vector(Math.cos(theta), Math.sin(theta))
+    }
+
+    get direction() {
+        return this.over(this.mag)
     }
 }
 

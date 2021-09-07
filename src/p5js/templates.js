@@ -1,5 +1,6 @@
 import { pixelgrid, setPixel } from "./util";
 import { donothing } from "../fns";
+import { vector } from "../vec";
 
 const staticgrid = (f, reset = donothing) => {
     return new p5((p5) => {
@@ -84,7 +85,7 @@ const mapfunction = (fn) => {
                 p5.loadPixels()
                 const tick = performance.now()
                 for (const [idx, x, y] of pixelgrid(p5)) {
-                    const val = fn({ x, y })
+                    const val = fn(vector(x, y))
                     setPixel(p5, idx, val)
                 }
                 const tock = performance.now()

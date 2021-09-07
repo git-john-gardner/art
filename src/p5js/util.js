@@ -23,10 +23,10 @@ function setPixel(p5, idx, col) {
     col.forEach((c, i) => p5.pixels[4 * idx + i] = c)
 }
 
-function drawShape(p5, points) {
+function drawShape(p5, points, closed = false) {
     p5.beginShape()
     points.forEach(({ x, y }) => p5.vertex(x, y))
-    p5.endShape()
+    closed ? p5.endShape(p5.CLOSE) : p5.endShape()
 }
 
 export { pixelgrid, setPixel, drawShape }

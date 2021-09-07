@@ -4,10 +4,27 @@ function* enumerate(it) {
         yield [i++, x]
 }
 
-function* range(max) {
-    let i = -1
-    while (++i < max)
-        yield i
+const iterhelpers = {
+    forEach(cb) {
+        for (const i of this)
+            cb(i)
+    },
+    map(fn) {
+        const arr = []
+        this.forEach(i => arr.push(fn(i)))
+        return arr
+    }
+}
+
+function range(max) {
+    return {
+        [Symbol.iterator]: function* () {
+            let i = -1
+            while (++i < max)
+                yield i
+        },
+        ...iterhelpers
+    }
 }
 
 function collect(iter) {
