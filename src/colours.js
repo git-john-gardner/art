@@ -14,6 +14,7 @@ const _pallettes = {
     seasalt: "#818479 #b5cbb7 #d2e4c4 #e4e9b2 #e7e08b #235789",
     child: "#264653 #2a9d8f #e9c46a #f4a261 #e76f51",
     default: "#000000 #888888 #FFFFFF",
+    war: "#000000 #AA0000 #FFFFFF"
 }
 
 const torgb = (hex) => {

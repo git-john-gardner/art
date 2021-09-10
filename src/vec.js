@@ -25,8 +25,9 @@ class Vector {
         this.x -= x; this.y -= y; this.z -= z;
         return this
     }
-    div(other) { // TODO think about /0
+    div(other) { // TODO think about 0
         const { x, y, z } = _sanitize(other)
+        if (x == 0 || y == 0 || z == 0) return this
         this.x /= x; this.y /= y; this.z /= z;
         return this
     }

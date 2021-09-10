@@ -1,28 +1,20 @@
 import { map, smoothstep } from "./maths/mappings"
+import { noise } from "./maths/perlinnoise"
 import { Circle } from "./shapes"
 
-export function spiral(circle, freq = 1, pow = 2) {
+export function spiral(circle, freq = 1, smooth = x => x, stretch = 0.2) {
     return p => {
         if (!circle.contains(p))
             return p
 
         const disp = p.minus(circle.centre)
-        const theta = smoothstep(1 - disp.mag / circle.r) * freq * Math.PI * 2
-        return disp.direction.rotatedby(theta).times(circle.r).plus(circle.centre)
-    }
-}
 
+        // proportion from edge of circle to centre
+        const lambda = 1 - disp.mag / circle.r
 
-class Donut {
-    constructor(centre, r, R) {
-        this.centre = centre
-        this.r = r
-        this.R = R
-        this._inner = new Circle(centre, r)
-        this._outer = new Circle(centre, R)
-    }
-    contains(p) {
-        return this._outer.contains(p) && !this._inner.contains(p)
+        const theta = smooth(lambda) * freq * Math.PI * 2
+
+        return disp.direction.rotatedby(theta).times(circle.r * (1 - lambda * stretch)).plus(circle.centre)
     }
 }
 

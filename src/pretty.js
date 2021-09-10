@@ -1,11 +1,18 @@
-// import { perlinnoise } from "./maths";
+import { noise } from "./maths/perlinnoise";
+import { vector } from "./vec";
 
-// function noiseofnoise(scale, rapidity) {
-//     let p = perlinnoise()
-//     return {
-//         fn(p) {
+export function noiseofnoise(scale, rapidity) {
+    return p => {
+        const n = noise(p.x * scale, p.y * scale)
+        return noise(n * rapidity)
+    }
+}
 
-//         },
-
-//     }
-// }
+export function perlindistortion(scale, amplitude) {
+    return ({ x, y }) => {
+        return vector(
+            x + amplitude * (noise(x * scale, y * scale) - 0.5),
+            y + amplitude * (noise((x + 100) * scale, (y + 100) * scale) - 0.5)
+        )
+    }
+}

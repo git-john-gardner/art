@@ -106,3 +106,6 @@ export function perlinnoise(seed = 0) {
         },
     };
 }
+
+const { noise, seed, detail: noisedetail } = perlinnoise()
+export { noise, seed, noisedetail }

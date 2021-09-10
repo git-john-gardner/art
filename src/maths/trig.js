@@ -7,3 +7,7 @@ export function scos(i) {
 export function ssin(x) {
     return lerp(Math.sin(x * Math.PI), -1, 1)//0.5 * (1.0 + Math.sin(x * Math.PI))
 }
+
+export function squaressin({ x, y }) {
+    return (ssin(x) + ssin(y)) / 2
+}

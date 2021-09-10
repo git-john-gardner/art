@@ -17,5 +17,5 @@ function compose(...props) {
 }
 
 const sketch = { compose }
-
 export { sketch }
+

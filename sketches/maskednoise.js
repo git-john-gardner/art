@@ -15,8 +15,8 @@ perlin.detail(4, 0.6)
 
 const clamp = x => Math.max(Math.min(x, 1), 0)
 
-const _c = grayscale(255)
-// const _c = pallettes.sailor
+// const _c = grayscale(255)
+const _c = pallettes.war
 
 const any = truthies => {
     for (const t of truthies)
