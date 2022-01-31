@@ -17,6 +17,7 @@ const clamp = (x) => Math.max(Math.min(x, 1), 0)
 
 const bellcurve = (center) => {
     return x => clamp(Math.sin((x / width + (0.5 - center)) * Math.PI))
+    return x => 0.5 + 0.5 * Math.cos((x - center) * 2 * Math.PI)
 }
 
 

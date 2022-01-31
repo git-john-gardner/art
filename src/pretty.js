@@ -8,11 +8,11 @@ export function noiseofnoise(scale, rapidity) {
     }
 }
 
-export function perlindistortion(scale, amplitude) {
+export function perlindistortion(scale, amplitude, seed = 0) {
     return ({ x, y }) => {
         return vector(
-            x + amplitude * (noise(x * scale, y * scale) - 0.5),
-            y + amplitude * (noise((x + 100) * scale, (y + 100) * scale) - 0.5)
+            x + amplitude * (noise(x * scale, y * scale, seed) - 0.5),
+            y + amplitude * (noise((x + 100) * scale, (y + 100) * scale, seed) - 0.5)
         )
     }
 }

@@ -1,5 +1,5 @@
 import { randchoice } from "./maths"
-import { range } from "./util"
+import { clamp, range } from "./util"
 
 const _pallettes = {
     sea: "#E7E0C9 #C1CFC0 #6B7AA1 #11324D",
@@ -25,8 +25,22 @@ const pallettes = {}
 for (const [name, colors] of Object.entries(_pallettes))
     pallettes[name] = colors.split(" ").map(torgb)
 
-const randpallette = () => pallettes[randchoice(Object.keys(pallettes))]
+export const randpallette = () => pallettes[randchoice(Object.keys(pallettes))]
 
-const grayscale = (n) => range(n).map(i => i / (n - 1) * 255)
+export const grayscale = (n) => range(n).map(i => i / (n - 1) * 255)
 
-export { pallettes, randpallette, grayscale }
+const bellcurve = (center) => {
+    return x => clamp(Math.sin((x + (0.5 - center)) * Math.PI))
+}
+
+export const rainbow = (x) => {
+    const base = 0.2
+    const fn = bellcurve(x * 2)
+    return [0, 1, 2].map(i => {
+        const lambda = (i) / 2
+        return (base + (1 - base) * fn(lambda)) * 255
+    })
+}
+
+
+export { pallettes }

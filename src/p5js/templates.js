@@ -1,7 +1,8 @@
 import { pixelgrid, setPixel } from "./util";
 import { vector } from "../vec";
-import { seed as seedrng } from "../maths/random";
+import { seed as seedrng, random } from "../maths/random";
 import { seed as seednoise } from "../maths/perlinnoise";
+import { range } from "../util";
 
 export const pausable = (() => {
     let paused = false
@@ -34,7 +35,8 @@ const onkey = (key, callback) => {
 const saveable = onkey("s", p5 => p5.saveCanvas("sketch.png"))
 const resettable = onkey("r", p5 => p5.setup())
 
-const mapfunction = (fn) => {
+const mapfunction = (fn, colour) => {
+    colour = colour || (x => x)
     return (() => {
         return {
             setup: (p5) => { p5.pixelDensity(1) },
@@ -43,7 +45,7 @@ const mapfunction = (fn) => {
                 const tick = performance.now()
                 for (const [idx, x, y] of pixelgrid(p5)) {
                     const val = fn(vector(x, y))
-                    setPixel(p5, idx, val)
+                    setPixel(p5, idx, colour(val))
                 }
                 const tock = performance.now()
                 p5.updatePixels()
@@ -83,6 +85,22 @@ const seeded = (cb) => (() => {
 
 const frozen = {
     draw(p5) { if (p5.frameCount > 1) return true },
+}
+
+export const grain = ampl => {
+    return {
+        draw(p5) {
+            p5.loadPixels()
+            for (const [idx, x, y] of pixelgrid(p5)) {
+                const val = random(-1, 1) * ampl
+                range(4).forEach(i => {
+                    const __idx = i + idx * 4
+                    p5.pixels[__idx] += val
+                })
+            }
+            p5.updatePixels()
+        }
+    }
 }
 
 

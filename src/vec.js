@@ -8,6 +8,7 @@ class Vector {
     }
 
     get mag() { return Math.hypot(this.x, this.y, this.z) }
+    get angle2D() { return (Math.atan2(this.y, this.x) + Math.PI * 2) % (Math.PI * 2) }
     copy() { return new Vector(this.x, this.y, this.z) }
 
     add(other) {
@@ -47,6 +48,12 @@ class Vector {
 
     rotatedby(theta) {
         return this.copy().rot(theta)
+    }
+
+    cross(other) {
+        const { x, y, z } = this;
+        const { x: xx, y: yy, z: zz } = other
+        return new Vector(y * zz - z * yy, z * xx - x * zz, x * yy - y * xx)
     }
 
     static fromAngle(theta) {

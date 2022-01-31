@@ -64,4 +64,6 @@ const time = (fn, msg = "duration:") => {
     return ret;
 }
 
+export const clamp = (x) => Math.max(Math.min(x, 1), 0)
+
 export { enumerate, range, collect, allkeys, pairs, assertordered, time }
